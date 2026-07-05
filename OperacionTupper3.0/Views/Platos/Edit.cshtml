@@ -1,4 +1,4 @@
-@model OperacionTupper3._0.Models.Platos
+@model OperacionTupper3._0.Models.PlatosConIngredientesVM
 
 @{
     ViewData["Title"] = "Edit";
@@ -11,18 +11,37 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id_Plato" />
+            <input type="hidden" asp-for="Plato.Id_Plato" />
             <div class="form-group">
-                <label asp-for="Nombre_Plato" class="control-label">Nombre:</label>
-                <input asp-for="Nombre_Plato" class="form-control" />
-                <span asp-validation-for="Nombre_Plato" class="text-danger"></span>
+                <label asp-for="Plato.Nombre_Plato" class="control-label">Nombre:</label>
+                <input asp-for="Plato.Nombre_Plato" class="form-control" />
+                <span asp-validation-for="Plato.Nombre_Plato" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Descripcion_Plato" class="control-label">Descripción</label>
-                <input asp-for="Descripcion_Plato" class="form-control" />
-                <span asp-validation-for="Descripcion_Plato" class="text-danger"></span>
+                <label asp-for="Plato.Descripcion_Plato" class="control-label">Descripción</label>
+                <input asp-for="Plato.Descripcion_Plato" class="form-control" />
+                <span asp-validation-for="Plato.Descripcion_Plato" class="text-danger"></span>
             </div>
-           
+
+            @foreach (var grupo in Model.TodosLosIngredientes.GroupBy(i => i.TipoIngredienteNavigation.Nombre_TipoIngrediente))
+            {
+                <h5>@grupo.Key</h5>
+
+                foreach (var ingrediente in grupo)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input"
+                               type="checkbox"
+                               name="IngredientesSeleccionados"
+                               value="@ingrediente.Id_Ingrediente"
+                        @(Model.IngredientesSeleccionados.Contains(ingrediente.Id_Ingrediente) ? "checked" : "") />
+
+                        <label class="form-check-label">
+                            @ingrediente.Nombre_Ingrediente
+                        </label>
+                    </div>
+                }
+            }
             <div class="form-group">
                 <input type="submit" value="Guardar" class="btn btn-primary" />
             </div>

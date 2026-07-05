@@ -1,8 +1,9 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using OperacionTupper3._0.Models;
 using OperacionTupper3._0.Data;
+using OperacionTupper3._0.Models;
+using System.Runtime.InteropServices;
 
 public class PlatosController : Controller
 {
@@ -38,22 +39,44 @@ public class PlatosController : Controller
     }
 
     // GET: PLATOSS/Create
-    public IActionResult Create()
+    public async Task<IActionResult> Create()
     {
-        return View();
-    }
+        var vm = new PlatosConIngredientesVM
+        {
+            TodosLosIngredientes = await _context.Ingredientes
+                .Include(i => i.TipoIngredienteNavigation)
+                .ToListAsync()
+        };
 
+        return View(vm);
+    }
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("IdPlato,NombrePlato,Descripcion,PlatoIngredientesNavigation")] Platos platos)
+    public async Task<IActionResult> Create(PlatosConIngredientesVM vm)
     {
+        ModelState.Remove("TodosLosIngredientes");
+        ModelState.Remove("Plato.PlatoIngredientesNavigation");
         if (ModelState.IsValid)
         {
-            _context.Add(platos);
+            _context.Add(vm.Plato);
+            await _context.SaveChangesAsync();
+
+            foreach (var idIngrediente in vm.IngredientesSeleccionados)
+            {
+                _context.PlatoIngredientes.Add(new PlatoIngredientes
+                {
+                    Id_Plato = vm.Plato.Id_Plato,
+                    Id_Ingrediente = idIngrediente
+                });
+            }
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        return View(platos);
+        vm.TodosLosIngredientes = await _context.Ingredientes
+        .Include(i => i.TipoIngredienteNavigation)
+        .ToListAsync();
+
+        return View(vm);
     }
 
     // GET: PLATOSS/Edit/5
@@ -63,21 +86,31 @@ public class PlatosController : Controller
         {
             return NotFound();
         }
-
-        var platos = await _context.Platos.FindAsync(idplato);
-        if (platos == null)
+        var vm = new PlatosConIngredientesVM();
+        vm.Plato = await _context.Platos.FindAsync(idplato);
+       
+        if (vm.Plato == null)
         {
             return NotFound();
         }
-        return View(platos);
+        vm.TodosLosIngredientes = await _context.Ingredientes
+            .Include(i => i.TipoIngredienteNavigation)
+            .ToListAsync();
+
+        vm.IngredientesSeleccionados = await _context.PlatoIngredientes
+             .Where(pi => pi.Id_Plato == idplato)
+             .Select(pi => pi.Id_Ingrediente)
+             .ToListAsync();
+
+        return View(vm);
 
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? idPlato, [Bind("IdPlato,NombrePlato,Descripcion")] Platos platos)
+    public async Task<IActionResult> Edit( PlatosConIngredientesVM vm)
     {
-        if (idPlato != platos.Id_Plato)
+        if ( vm.Plato.Id_Plato==0)
         {
             return NotFound();
         }
@@ -86,12 +119,25 @@ public class PlatosController : Controller
         {
             try
             {
-                _context.Update(platos);
+                _context.Update(vm.Plato);
+                var ingredientesActuales = await _context.PlatoIngredientes
+                    .Where(pi => pi.Id_Plato == vm.Plato.Id_Plato)
+                    .ToListAsync();
+
+                _context.PlatoIngredientes.RemoveRange(ingredientesActuales);
+
+                foreach (var idingrediente in vm.IngredientesSeleccionados) {
+                    _context.PlatoIngredientes.Add(new PlatoIngredientes
+                    {
+                        Id_Plato = vm.Plato.Id_Plato,
+                        Id_Ingrediente = idingrediente
+                    });
+                }
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PlatosExists(platos.Id_Plato))
+                if (!PlatosExists(vm.Plato.Id_Plato))
                 {
                     return NotFound();
                 }
@@ -102,7 +148,12 @@ public class PlatosController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
-        return View(platos);
+
+        vm.TodosLosIngredientes = await _context.Ingredientes
+            .Include(i => i.TipoIngredienteNavigation)
+            .ToListAsync();
+
+        return View(vm);
     }
 
     // GET: PLATOSS/Delete/5
@@ -131,6 +182,12 @@ public class PlatosController : Controller
         var platos = await _context.Platos.FindAsync(idPlato);
         if (platos != null)
         {
+
+            var ingredientesActuales = await _context.PlatoIngredientes
+                   .Where(pi => pi.Id_Plato == idPlato)
+                   .ToListAsync();
+
+            _context.PlatoIngredientes.RemoveRange(ingredientesActuales);
             _context.Platos.Remove(platos);
         }
 
