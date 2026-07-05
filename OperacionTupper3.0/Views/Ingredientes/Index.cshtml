@@ -1,0 +1,47 @@
+@model IEnumerable<OperacionTupper3._0.Models.Ingredientes>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreIngrediente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TipoIngrediente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlatoIngredientesNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.NombreIngrediente)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.TipoIngrediente)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.PlatoIngredientesNavigation)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdIngrediente">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdIngrediente">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdIngrediente">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
