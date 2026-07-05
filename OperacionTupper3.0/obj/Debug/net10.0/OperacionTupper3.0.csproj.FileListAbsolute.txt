@@ -223,3 +223,4 @@ C:\Users\Yasmina del Real\source\repos\sanchoperez91\OperacionTupper3.0\Operacio
 C:\Users\Yasmina del Real\source\repos\sanchoperez91\OperacionTupper3.0\OperacionTupper3.0\obj\Debug\net10.0\OperacionTupper3.0.csproj.AssemblyReference.cache
 C:\Users\Yasmina del Real\source\repos\sanchoperez91\OperacionTupper3.0\OperacionTupper3.0\obj\Debug\net10.0\Operacio.C03BA225.Up2Date
 C:\Users\Yasmina del Real\source\repos\sanchoperez91\OperacionTupper3.0\OperacionTupper3.0\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
+C:\Users\Yasmina del Real\source\repos\sanchoperez91\OperacionTupper3.0\OperacionTupper3.0\obj\Debug\net10.0\OperacionTupper3.0.sourcelink.json

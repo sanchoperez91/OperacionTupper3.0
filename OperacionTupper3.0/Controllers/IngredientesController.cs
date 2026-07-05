@@ -1,8 +1,9 @@
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using OperacionTupper3._0.Models;
 using OperacionTupper3._0.Data;
+using OperacionTupper3._0.Models;
 
 public class IngredientesController : Controller
 {
@@ -16,7 +17,10 @@ public class IngredientesController : Controller
     // GET: INGREDIENTESS
     public async Task<IActionResult> Index()    
     {
-        return View(await _context.Ingredientes.ToListAsync());
+        var ingredientes = _context.Ingredientes
+    .Include(i => i.TipoIngredienteNavigation);
+
+        return View(await ingredientes.ToListAsync());
     }
 
     // GET: INGREDIENTESS/Details/5
@@ -28,7 +32,8 @@ public class IngredientesController : Controller
         }
 
         var ingredientes = await _context.Ingredientes
-            .FirstOrDefaultAsync(m => m.IdIngrediente == idingrediente);
+            .Include(i => i.TipoIngredienteNavigation)
+            .FirstOrDefaultAsync(m => m.Id_Ingrediente == idingrediente);
         if (ingredientes == null)
         {
             return NotFound();
@@ -40,12 +45,13 @@ public class IngredientesController : Controller
     // GET: INGREDIENTESS/Create
     public IActionResult Create()
     {
+        ViewData["Id_TipoIngrediente"] = new SelectList(_context.TipoIngrediente, "Id_TipoIngrediente", "Nombre_TipoIngrediente");
         return View();
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("IdIngrediente,NombreIngrediente,TipoIngrediente,PlatoIngredientesNavigation")] Ingredientes ingredientes)
+    public async Task<IActionResult> Create(Ingredientes ingredientes)
     {
         if (ModelState.IsValid)
         {
@@ -53,6 +59,14 @@ public class IngredientesController : Controller
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        ViewData["Id_TipoIngrediente"] = new SelectList(
+            _context.TipoIngrediente,
+            "Id_TipoIngrediente",
+            "Nombre_TipoIngrediente",
+            ingredientes.Id_TipoIngrediente
+        );
+
         return View(ingredientes);
     }
 
@@ -65,18 +79,23 @@ public class IngredientesController : Controller
         }
 
         var ingredientes = await _context.Ingredientes.FindAsync(idingrediente);
+
+        ViewData["Id_TipoIngrediente"] = new SelectList(_context.TipoIngrediente,"Id_TipoIngrediente", "Nombre_TipoIngrediente", ingredientes.Id_TipoIngrediente);
+        
         if (ingredientes == null)
         {
+
             return NotFound();
+
         }
         return View(ingredientes);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? idingrediente, [Bind("IdIngrediente,NombreIngrediente,TipoIngrediente,PlatoIngredientesNavigation")] Ingredientes ingredientes)
+    public async Task<IActionResult> Edit(int? Id_Ingrediente, Ingredientes ingredientes)
     {
-        if (idingrediente != ingredientes.IdIngrediente)
+        if (Id_Ingrediente != ingredientes.Id_Ingrediente)
         {
             return NotFound();
         }
@@ -90,7 +109,7 @@ public class IngredientesController : Controller
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!IngredientesExists(ingredientes.IdIngrediente))
+                if (!IngredientesExists(ingredientes.Id_Ingrediente))
                 {
                     return NotFound();
                 }
@@ -101,6 +120,14 @@ public class IngredientesController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
+        ViewData["Id_TipoIngrediente"] = new SelectList(
+                _context.TipoIngrediente,
+                "Id_TipoIngrediente",
+                "Nombre_TipoIngrediente",
+                ingredientes.Id_TipoIngrediente
+            );
+        return View(ingredientes);
+
         return View(ingredientes);
     }
 
@@ -113,7 +140,8 @@ public class IngredientesController : Controller
         }
 
         var ingredientes = await _context.Ingredientes
-            .FirstOrDefaultAsync(m => m.IdIngrediente == idingrediente);
+               .Include(i => i.TipoIngredienteNavigation)
+            .FirstOrDefaultAsync(m => m.Id_Ingrediente == idingrediente);
         if (ingredientes == null)
         {
             return NotFound();
@@ -125,9 +153,9 @@ public class IngredientesController : Controller
     // POST: INGREDIENTESS/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(int? idingrediente)
+    public async Task<IActionResult> DeleteConfirmed(int? Id_Ingrediente)
     {
-        var ingredientes = await _context.Ingredientes.FindAsync(idingrediente);
+        var ingredientes = await _context.Ingredientes.FindAsync(Id_Ingrediente);
         if (ingredientes != null)
         {
             _context.Ingredientes.Remove(ingredientes);
@@ -137,8 +165,8 @@ public class IngredientesController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    private bool IngredientesExists(int? idingrediente)
+    private bool IngredientesExists(int? Id_Ingrediente)
     {
-        return _context.Ingredientes.Any(e => e.IdIngrediente == idingrediente);
+        return _context.Ingredientes.Any(e => e.Id_Ingrediente == Id_Ingrediente);
     }
 }

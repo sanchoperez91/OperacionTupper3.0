@@ -7,13 +7,13 @@ namespace OperacionTupper3._0.Models;
 
 public partial class PlatoIngredientes
 {
-    public int IdPlato { get; set; }
+    public int Id_Plato { get; set; }
 
-    public int IdIngrediente { get; set; }
+    public int Id_Ingrediente { get; set; }
 
-    [ForeignKey(nameof(IdPlato))]
+    [ForeignKey(nameof(Id_Plato))]
     public virtual Platos PlatosNavigation { get; set; } = null!;
 
-    [ForeignKey(nameof(IdIngrediente))]
+    [ForeignKey(nameof(Id_Ingrediente))]
     public virtual Ingredientes IngredientesNavigation { get; set; } = null!;
 }

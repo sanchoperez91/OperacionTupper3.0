@@ -20,15 +20,15 @@ public class PlatosController : Controller
     }
 
     // GET: PLATOSS/Details/5
-    public async Task<IActionResult> Details(int? idplato)
+    public async Task<IActionResult> Details(int? idPlato)
     {
-        if (idplato == null)
+        if (idPlato == null)
         {
             return NotFound();
         }
 
         var platos = await _context.Platos
-            .FirstOrDefaultAsync(m => m.IdPlato == idplato);
+            .FirstOrDefaultAsync(m => m.Id_Plato == idPlato);
         if (platos == null)
         {
             return NotFound();
@@ -70,13 +70,14 @@ public class PlatosController : Controller
             return NotFound();
         }
         return View(platos);
+
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? idplato, [Bind("IdPlato,NombrePlato,Descripcion,PlatoIngredientesNavigation")] Platos platos)
+    public async Task<IActionResult> Edit(int? idPlato, [Bind("IdPlato,NombrePlato,Descripcion")] Platos platos)
     {
-        if (idplato != platos.IdPlato)
+        if (idPlato != platos.Id_Plato)
         {
             return NotFound();
         }
@@ -90,7 +91,7 @@ public class PlatosController : Controller
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PlatosExists(platos.IdPlato))
+                if (!PlatosExists(platos.Id_Plato))
                 {
                     return NotFound();
                 }
@@ -105,15 +106,15 @@ public class PlatosController : Controller
     }
 
     // GET: PLATOSS/Delete/5
-    public async Task<IActionResult> Delete(int? idplato)
+    public async Task<IActionResult> Delete(int? idPlato)
     {
-        if (idplato == null)
+        if (idPlato == null)
         {
             return NotFound();
         }
 
         var platos = await _context.Platos
-            .FirstOrDefaultAsync(m => m.IdPlato == idplato);
+            .FirstOrDefaultAsync(m => m.Id_Plato == idPlato);
         if (platos == null)
         {
             return NotFound();
@@ -125,9 +126,9 @@ public class PlatosController : Controller
     // POST: PLATOSS/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(int? idplato)
+    public async Task<IActionResult> DeleteConfirmed(int? idPlato)
     {
-        var platos = await _context.Platos.FindAsync(idplato);
+        var platos = await _context.Platos.FindAsync(idPlato);
         if (platos != null)
         {
             _context.Platos.Remove(platos);
@@ -137,8 +138,8 @@ public class PlatosController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    private bool PlatosExists(int? idplato)
+    private bool PlatosExists(int? idPlato)
     {
-        return _context.Platos.Any(e => e.IdPlato == idplato);
+        return _context.Platos.Any(e => e.Id_Plato == idPlato);
     }
 }

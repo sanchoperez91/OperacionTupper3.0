@@ -4,35 +4,29 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Detalle del plato</h1>
 
 <div>
-    <h4>Platos</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NombrePlato)
+            Nombre:
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NombrePlato)
+            @Html.DisplayFor(model => model.Nombre_Plato)
         </dd>
     </dl>
+    <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Descripcion)
+            Descripción:
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Descripcion)
+            @Html.DisplayFor(model => model.Descripcion_Plato)
         </dd>
     </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PlatoIngredientesNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PlatoIngredientesNavigation)
-        </dd>
-    </dl>
+        
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.IdPlato">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Id_Plato">Editar</a> |
+    <a asp-action="Index">Volver al listado</a>
 </div>

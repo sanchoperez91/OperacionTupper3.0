@@ -19,6 +19,7 @@ public partial class MiDbContext : DbContext
     public virtual DbSet<Platos> Platos { get; set; }
 
     public virtual DbSet<PlatoIngredientes> PlatoIngredientes { get; set; }
+    public virtual DbSet<TipoIngrediente> TipoIngrediente { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -33,7 +34,7 @@ public partial class MiDbContext : DbContext
     {
         modelBuilder.Entity<PlatoIngredientes>(entity =>
         {
-            entity.HasKey(e => new { e.IdPlato, e.IdIngrediente });
+            entity.HasKey(e => new { e.Id_Plato, e.Id_Ingrediente });
         });
 
         OnModelCreatingPartial(modelBuilder);

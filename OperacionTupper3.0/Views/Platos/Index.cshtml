@@ -4,23 +4,21 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Platos</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Añadir plato</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.NombrePlato)
+                Nombre:
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Descripcion)
+                Descripción:
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PlatoIngredientesNavigation)
-            </th>
+ 
             <th></th>
         </tr>
     </thead>
@@ -28,18 +26,16 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(model => item.NombrePlato)
+                    @Html.DisplayFor(model => item.Nombre_Plato)
             </td>
             <td>
-                @Html.DisplayFor(model => item.Descripcion)
+                @Html.DisplayFor(model => item.Descripcion_Plato)
             </td>
+
             <td>
-                @Html.DisplayFor(model => item.PlatoIngredientesNavigation)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdPlato">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdPlato">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdPlato">Delete</a>
+                <a asp-action="Edit" asp-route-idPlato="@item.Id_Plato">Editar</a> |
+                    <a asp-action="Details" asp-route-idPlato="@item.Id_Plato">Detalle</a> |
+                    <a asp-action="Delete" asp-route-idPlato="@item.Id_Plato">Eliminar</a>
             </td>
         </tr>
 }

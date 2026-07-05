@@ -6,11 +6,11 @@ namespace OperacionTupper3._0.Models;
 public partial class Platos
 {
     [Key]
-    public int IdPlato { get; set; }
+    public int Id_Plato { get; set; }
 
-    public string NombrePlato { get; set; } = null!;
+    public string Nombre_Plato { get; set; } = null!;
 
-    public string? Descripcion { get; set; }
+    public string? Descripcion_Plato { get; set; }
 
     [InverseProperty(nameof(PlatoIngredientes.PlatosNavigation))]
     public virtual ICollection<PlatoIngredientes> PlatoIngredientesNavigation { get; set; } = new List<PlatoIngredientes>();
