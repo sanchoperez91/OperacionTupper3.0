@@ -23,6 +23,24 @@
                 <span asp-validation-for="Plato.Descripcion_Plato" class="text-danger"></span>
             </div>
 
+            <div class="form-group">
+                <label asp-for="Plato.Id_TipoPlato" class="control-label">Tipo de plato</label>
+                <select asp-for="Plato.Id_TipoPlato" class="form-control" asp-items="ViewBag.Id_TipoPlato">
+                    <option value="">-- Selecciona tipo de plato --</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Plato.Id_HoraDelDia" class="control-label">Hora del día</label>
+                <select asp-for="Plato.Id_HoraDelDia" class="form-control" asp-items="ViewBag.Id_HoraDelDia">
+                    <option value="">-- Selecciona hora del día --</option>
+                </select>
+            </div>
+
+            <div class="form-check mb-3">
+                <input asp-for="Plato.PlatoUnico" class="form-check-input" />
+                <label asp-for="Plato.PlatoUnico" class="form-check-label">Plato único</label>
+            </div>
             @foreach (var grupo in Model.TodosLosIngredientes.GroupBy(i => i.TipoIngredienteNavigation.Nombre_TipoIngrediente))
             {
                 <h5>@grupo.Key</h5>

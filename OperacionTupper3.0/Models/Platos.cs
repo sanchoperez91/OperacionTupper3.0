@@ -11,7 +11,15 @@ public partial class Platos
     public string Nombre_Plato { get; set; } = null!;
 
     public string? Descripcion_Plato { get; set; }
+    public bool PlatoUnico { get; set; } 
+    public int Id_TipoPlato { get; set; }
+    public int Id_HoraDelDia { get; set; }
 
     [InverseProperty(nameof(PlatoIngredientes.PlatosNavigation))]
     public virtual ICollection<PlatoIngredientes> PlatoIngredientesNavigation { get; set; } = new List<PlatoIngredientes>();
+    
+    [ForeignKey(nameof(Id_TipoPlato))]
+    public virtual TipoPlato? TipoPlatoNavigation { get; set; } = null!;
+    [ForeignKey(nameof(Id_HoraDelDia))]
+    public virtual HoraDelDia? HoraDelDiaNavigation { get; set; } = null!;
 }

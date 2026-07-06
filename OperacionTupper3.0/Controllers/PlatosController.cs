@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using OperacionTupper3._0.Data;
 using OperacionTupper3._0.Models;
 using System.Runtime.InteropServices;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 public class PlatosController : Controller
 {
@@ -41,6 +42,8 @@ public class PlatosController : Controller
     // GET: PLATOSS/Create
     public async Task<IActionResult> Create()
     {
+        ViewData["Id_TipoPlato"] = new SelectList(_context.TipoPlato, "Id_TipoPlato", "Nombre_TipoPlato");
+        ViewData["Id_HoraDelDia"] = new SelectList(_context.HoraDelDia, "Id_HoraDelDia", "Nombre_HoraDelDia");
         var vm = new PlatosConIngredientesVM
         {
             TodosLosIngredientes = await _context.Ingredientes
@@ -72,6 +75,9 @@ public class PlatosController : Controller
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        ViewData["Id_TipoPlato"] = new SelectList(_context.TipoPlato, "Id_TipoPlato", "Nombre_TipoPlato", vm.Plato.Id_TipoPlato);
+        ViewData["Id_HoraDelDia"] = new SelectList(_context.HoraDelDia, "Id_HoraDelDia", "Nombre_HoraDelDia", vm.Plato.Id_HoraDelDia);
+
         vm.TodosLosIngredientes = await _context.Ingredientes
         .Include(i => i.TipoIngredienteNavigation)
         .ToListAsync();
@@ -86,9 +92,15 @@ public class PlatosController : Controller
         {
             return NotFound();
         }
+
+
         var vm = new PlatosConIngredientesVM();
         vm.Plato = await _context.Platos.FindAsync(idplato);
-       
+        ViewData["Id_TipoPlato"] = new SelectList(_context.TipoPlato, "Id_TipoPlato", "Nombre_TipoPlato", vm.Plato.Id_TipoPlato);
+
+        ViewData["Id_HoraDelDia"] = new SelectList(_context.HoraDelDia, "Id_HoraDelDia", "Nombre_HoraDelDia", vm.Plato.Id_HoraDelDia);
+
+
         if (vm.Plato == null)
         {
             return NotFound();
@@ -148,6 +160,9 @@ public class PlatosController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
+
+        ViewData["Id_TipoPlato"] = new SelectList(_context.TipoPlato, "Id_TipoPlato", "Nombre_TipoPlato", vm.Plato.Id_TipoPlato);
+        ViewData["Id_HoraDelDia"] = new SelectList(_context.HoraDelDia, "Id_HoraDelDia", "Nombre_HoraDelDia", vm.Plato.Id_HoraDelDia);
 
         vm.TodosLosIngredientes = await _context.Ingredientes
             .Include(i => i.TipoIngredienteNavigation)

@@ -21,6 +21,9 @@ public partial class MiDbContext : DbContext
     public virtual DbSet<PlatoIngredientes> PlatoIngredientes { get; set; }
     public virtual DbSet<TipoIngrediente> TipoIngrediente { get; set; }
 
+    public virtual DbSet<TipoPlato> TipoPlato { get; set; }
+    public virtual DbSet<HoraDelDia> HoraDelDia { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)

@@ -21,9 +21,29 @@
             </div>
 
             <div class="form-group">
+                <label asp-for="Plato.Id_TipoPlato"></label>
+                <select asp-for="Plato.Id_TipoPlato" class="form-control" asp-items="ViewBag.Id_TipoPlato">
+                    <option value="">-- Selecciona tipo de plato --</option>
+                </select>
+                <span asp-validation-for="Plato.Id_TipoPlato" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Plato.Id_HoraDelDia"></label>
+                <select asp-for="Plato.Id_HoraDelDia" class="form-control" asp-items="ViewBag.Id_HoraDelDia">
+                    <option value="">-- Selecciona hora del día --</option>
+                </select>
+                <span asp-validation-for="Plato.Id_HoraDelDia" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
                 <label asp-for="Plato.Descripcion_Plato" class="control-label">Descripción:</label>
                 <input asp-for="Plato.Descripcion_Plato" class="form-control" />
                 <span asp-validation-for="Plato.Descripcion_Plato" class="text-danger"></span>
+            </div>
+            <div class="form-check mb-3">
+                <input asp-for="Plato.PlatoUnico" class="form-check-input" />
+                <label asp-for="Plato.PlatoUnico" class="form-check-label"></label>
             </div>
             <div class="form-group">
                 <label>Ingredientes</label>
