@@ -224,3 +224,4 @@ C:\Users\Yasmina del Real\source\repos\sanchoperez91\OperacionTupper3.0\Operacio
 C:\Users\Yasmina del Real\source\repos\sanchoperez91\OperacionTupper3.0\OperacionTupper3.0\obj\Debug\net10.0\Operacio.C03BA225.Up2Date
 C:\Users\Yasmina del Real\source\repos\sanchoperez91\OperacionTupper3.0\OperacionTupper3.0\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
 C:\Users\Yasmina del Real\source\repos\sanchoperez91\OperacionTupper3.0\OperacionTupper3.0\obj\Debug\net10.0\OperacionTupper3.0.sourcelink.json
+C:\Users\Yasmina del Real\source\repos\sanchoperez91\OperacionTupper3.0\OperacionTupper3.0\obj\Debug\net10.0\compressed\qmty8lvle1-{0}-rji2h9qh1h-rji2h9qh1h.gz

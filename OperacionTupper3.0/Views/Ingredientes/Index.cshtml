@@ -1,43 +1,32 @@
 @model IEnumerable<OperacionTupper3._0.Models.Ingredientes>
 
-@{
-    ViewData["Title"] = "Index";
-}
+<h1 class="mb-4">Ingredientes</h1>
 
-<h1>Ingredientes</h1>
+<div class="mb-4">
+    <a asp-action="Create" class="boton_anadir">+ Añadir</a>
+</div>
 
-<p>
-    <a asp-action="Create">Añadir nuevo</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Nombre
-            </th>
-            <th>
-               Tipo
-            </th>
+<div class="contenedor-tipos">
+    @foreach (var grupo in Model.GroupBy(i => i.TipoIngredienteNavigation))
+    {
+        <div class="card-tipo">
+            <div class="card-titulo">
+                @grupo.Key.Nombre_TipoIngrediente
+            </div>
 
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(model => item.Nombre_Ingrediente)
-            </td>
-            <td>
-                    @item.TipoIngredienteNavigation.Nombre_TipoIngrediente
-            </td>
+            <div class="ingredientes-grid">
+                @foreach (var ingrediente in grupo.OrderBy(i => i.Nombre_Ingrediente))
+                {
+                    <div class="ingrediente-item">
+                        <span>@ingrediente.Nombre_Ingrediente</span>
 
-            <td>
-                    <a asp-action="Edit" asp-route-idingrediente="@item.Id_Ingrediente">Editar</a> |
-                    <a asp-action="Details" asp-route-idingrediente="@item.Id_Ingrediente">Detalle</a> |
-                    <a asp-action="Delete" asp-route-idingrediente="@item.Id_Ingrediente">Eliminar</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                        <div class="acciones">
+                            <a asp-action="Edit" asp-route-idingrediente="@ingrediente.Id_Ingrediente">✏️</a>
+                            <a asp-action="Delete" asp-route-idingrediente="@ingrediente.Id_Ingrediente">🗑️</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>

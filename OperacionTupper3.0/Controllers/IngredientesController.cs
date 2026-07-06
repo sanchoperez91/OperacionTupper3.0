@@ -20,6 +20,7 @@ public class IngredientesController : Controller
         var ingredientes = _context.Ingredientes
     .Include(i => i.TipoIngredienteNavigation);
 
+
         return View(await ingredientes.ToListAsync());
     }
 

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OperacionTupper3.0")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+269e7100435f482e00f87f67cf3d179d2be7f59b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5095b83d4eb9662cc48c24524b8d7475226132d6")]
 [assembly: System.Reflection.AssemblyProductAttribute("OperacionTupper3.0")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OperacionTupper3.0")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
