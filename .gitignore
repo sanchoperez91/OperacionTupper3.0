@@ -3,4 +3,5 @@ bin/
 obj/
 *.user
 *.suo
-OperacionTupper3.0
+
+OperacionTupper3.0/wwwroot/lib

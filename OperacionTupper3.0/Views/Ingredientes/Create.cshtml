@@ -1,0 +1,37 @@
+@model OperacionTupper3._0.Models.Ingredientes
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Añadir nuevo ingrediente</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Nombre_Ingrediente" class="control-label">Nombre</label>
+                <input asp-for="Nombre_Ingrediente" class="form-control" />
+                <span asp-validation-for="Nombre_Ingrediente" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Id_TipoIngrediente" class="control-label">Tipo</label>
+                <select asp-for="Id_TipoIngrediente" class="form-control" asp-items="ViewBag.Id_TipoIngrediente"></select>
+                <span asp-validation-for="Id_TipoIngrediente" class="text-danger"></span>
+            </div>
+
+            
+            <div class="form-group">
+                <input type="submit" value="Añadir" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Volver al listado</a>
+</div>
