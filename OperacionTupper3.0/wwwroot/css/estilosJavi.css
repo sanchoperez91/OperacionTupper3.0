@@ -99,3 +99,97 @@
 
 
 }
+
+
+/*Estilo Index platos*/
+
+.boton_anadir {
+    display: inline-block;
+    background: #4CAF50;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+    .boton_anadir:hover {
+        color: white;
+        background: #3b8d3f;
+    }
+
+.contenedor-platos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.card-plato {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .08);
+    transition: transform .2s, box-shadow .2s;
+}
+
+    .card-plato:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, .12);
+    }
+
+.card-plato-titulo {
+    background: #2f6fad;
+    color: white;
+    padding: 10px 14px;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.card-plato-contenido {
+    padding: 12px 14px;
+}
+
+.dato-plato {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 7px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+    .dato-plato:last-child {
+        border-bottom: none;
+    }
+
+.dato-titulo {
+    font-weight: 600;
+    color: #333;
+}
+
+.acciones-plato {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 9px 14px;
+    background: #fafafa;
+    border-top: 1px solid #eee;
+}
+
+    .acciones-plato a {
+        text-decoration: none;
+        font-size: 17px;
+        display: inline-block;
+        transition: transform .2s;
+    }
+
+        .acciones-plato a:hover {
+            transform: scale(1.18);
+        }
+
+@media (max-width: 768px) {
+    .contenedor-platos {
+        grid-template-columns: 1fr;
+    }
+}

@@ -4,46 +4,55 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Platos</h1>
+<h1 class="mb-4">Platos</h1>
 
-<p>
-    <a asp-action="Create">Añadir plato</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Nombre:
-            </th>
-            <th>
-                Tipo:
-            </th>
-            <th>
-                Hora del día:
-            </th>
- 
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                    @Html.DisplayFor(model => item.Nombre_Plato)
-            </td>
-                <td>
-                    @Html.DisplayFor(model => item.TipoPlatoNavigation.Nombre_TipoPlato)
-                </td>
-            <td>
-                @Html.DisplayFor(model => item.HoraDelDiaNavigation.Nombre_HoraDelDia)
-            </td>
+<div class="mb-4">
+    <a asp-action="Create" class="boton_anadir">+ Añadir</a>
+</div>
 
-            <td>
-                <a asp-action="Edit" asp-route-idPlato="@item.Id_Plato">Editar</a> |
-                    <a asp-action="Details" asp-route-idPlato="@item.Id_Plato">Detalle</a> |
-                    <a asp-action="Delete" asp-route-idPlato="@item.Id_Plato">Eliminar</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="contenedor-platos">
+    @foreach (var plato in Model.OrderBy(p => p.Nombre_Plato))
+    {
+        <div class="card-plato">
+
+            <div class="card-plato-titulo">
+                @plato.Nombre_Plato
+            </div>
+
+            <div class="card-plato-contenido">
+
+                <div class="dato-plato">
+                    <span class="dato-titulo">Tipo:</span>
+                    <span>@plato.TipoPlatoNavigation?.Nombre_TipoPlato</span>
+                </div>
+
+                <div class="dato-plato">
+                    <span class="dato-titulo">Hora del día:</span>
+                    <span>@plato.HoraDelDiaNavigation?.Nombre_HoraDelDia</span>
+                </div>
+
+            </div>
+
+            <div class="acciones-plato">
+                <a asp-action="Edit"
+                   asp-route-idPlato="@plato.Id_Plato"
+                   title="Editar">
+                    ✏️
+                </a>
+
+                <a asp-action="Details"
+                   asp-route-idPlato="@plato.Id_Plato"
+                   title="Ver detalle">
+                    👁️
+                </a>
+
+                <a asp-action="Delete"
+                   asp-route-idPlato="@plato.Id_Plato"
+                   title="Eliminar">
+                    🗑️
+                </a>
+            </div>
+
+        </div>
+    }
+</div>
