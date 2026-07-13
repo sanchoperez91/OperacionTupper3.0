@@ -10,6 +10,6 @@ public partial class PlatosConIngredientesVM
     public Platos Plato { get; set; } = new Platos();
 
     public List<int> IngredientesSeleccionados { get; set; } = new List<int>();
-
+   
     public List<Ingredientes> TodosLosIngredientes { get; set; } = new List<Ingredientes>();
 }

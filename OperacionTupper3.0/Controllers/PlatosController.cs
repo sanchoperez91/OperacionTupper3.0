@@ -18,7 +18,10 @@ public class PlatosController : Controller
     // GET: PLATOSS
     public async Task<IActionResult> Index()    
     {
-        return View(await _context.Platos.ToListAsync());
+        return View(await _context.Platos.Include(p => p.HoraDelDiaNavigation)
+            .Include(p => p.TipoPlatoNavigation)
+            .Include(p => p.PlatoIngredientesNavigation)
+                .ThenInclude(pi => pi.IngredientesNavigation).ToListAsync());
     }
 
     // GET: PLATOSS/Details/5
@@ -30,13 +33,30 @@ public class PlatosController : Controller
         }
 
         var platos = await _context.Platos
+            .Include(p => p.HoraDelDiaNavigation)
+            .Include(p => p.TipoPlatoNavigation)
+            .Include(p => p.PlatoIngredientesNavigation)
+                .ThenInclude(pi => pi.IngredientesNavigation)
             .FirstOrDefaultAsync(m => m.Id_Plato == idPlato);
+
+        var ingredientesPlato = await _context.Ingredientes
+            .Include(i => i.PlatoIngredientesNavigation)
+                .Where(i => i.PlatoIngredientesNavigation.Any(pi => pi.Id_Plato == idPlato))
+                  .ToListAsync();
+
+        var vm = new PlatosConIngredientesVM
+        {
+            Plato =platos,  
+            TodosLosIngredientes=ingredientesPlato
+        };
+
+
         if (platos == null)
         {
             return NotFound();
         }
 
-        return View(platos);
+        return View(vm);
     }
 
     // GET: PLATOSS/Create

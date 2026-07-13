@@ -16,7 +16,10 @@
                 Nombre:
             </th>
             <th>
-                Descripción:
+                Tipo:
+            </th>
+            <th>
+                Hora del día:
             </th>
  
             <th></th>
@@ -28,8 +31,11 @@
             <td>
                     @Html.DisplayFor(model => item.Nombre_Plato)
             </td>
+                <td>
+                    @Html.DisplayFor(model => item.TipoPlatoNavigation.Nombre_TipoPlato)
+                </td>
             <td>
-                @Html.DisplayFor(model => item.Descripcion_Plato)
+                @Html.DisplayFor(model => item.HoraDelDiaNavigation.Nombre_HoraDelDia)
             </td>
 
             <td>

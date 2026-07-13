@@ -27,7 +27,7 @@
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="Id_Plato" />
+        <input type="hidden" name="idPlato" value="@Model.Id_Plato" />
         <input type="submit" value="Eliminar" class="btn btn-danger" /> |
         <a asp-action="Index">Volver al listado</a>
     </form>

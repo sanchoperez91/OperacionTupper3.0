@@ -1,4 +1,4 @@
-@model OperacionTupper3._0.Models.Platos
+@model OperacionTupper3._0.Models.PlatosConIngredientesVM
 
 @{
     ViewData["Title"] = "Details";
@@ -13,20 +13,47 @@
             Nombre:
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nombre_Plato)
+            @Html.DisplayFor(model => model.Plato.Nombre_Plato)
         </dd>
     </dl>
     <dl class="row">
         <dt class = "col-sm-2">
-            Descripción:
+            Hora del día:
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Descripcion_Plato)
+            @Html.DisplayFor(model => model.Plato.HoraDelDiaNavigation.Nombre_HoraDelDia)
         </dd>
     </dl>
-        
+    <dl class="row">
+        <dt class="col-sm-2">
+            Tipo de plato:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Plato.TipoPlatoNavigation.Nombre_TipoPlato)
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Ingredientes:
+        </dt>
+        <dd class="col-sm-10">
+            @foreach (var ing in Model.TodosLosIngredientes)
+            {
+                <div>@ing.Nombre_Ingrediente</div>    
+            }
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Descripción:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Plato.Descripcion_Plato)
+        </dd>
+    </dl>
+
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id_Plato">Editar</a> |
+    <a asp-action="Edit" asp-route-id="@Model?.Plato.Id_Plato">Editar</a> |
     <a asp-action="Index">Volver al listado</a>
 </div>
