@@ -23,6 +23,10 @@ public partial class MiDbContext : DbContext
 
     public virtual DbSet<TipoPlato> TipoPlato { get; set; }
     public virtual DbSet<HoraDelDia> HoraDelDia { get; set; }
+    public virtual DbSet<Menu> Menu { get; set; }
+    public virtual DbSet<DiaMenu> DiaMenu { get; set; }
+    public virtual DbSet<Plato_DiaMenu> Plato_DiaMenu { get; set; }
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

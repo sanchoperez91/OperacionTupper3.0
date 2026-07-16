@@ -22,4 +22,8 @@ public partial class Platos
     public virtual TipoPlato? TipoPlatoNavigation { get; set; } = null!;
     [ForeignKey(nameof(Id_HoraDelDia))]
     public virtual HoraDelDia? HoraDelDiaNavigation { get; set; } = null!;
+
+
+    [InverseProperty(nameof(Plato_DiaMenu.PlatoNavigation))]
+    public virtual ICollection<Plato_DiaMenu> Plato_DiaMenuNavigation { get; set; } = new List<Plato_DiaMenu>();
 }

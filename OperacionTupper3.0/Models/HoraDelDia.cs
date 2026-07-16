@@ -13,4 +13,7 @@ public partial class HoraDelDia
 
     [InverseProperty(nameof(Platos.HoraDelDiaNavigation))]
     public virtual ICollection<Platos> PlatosNavigation { get; set; } = new List<Platos>();
+
+    [InverseProperty(nameof(Plato_DiaMenu.HoraDelDiaNavigation))]
+    public virtual ICollection<Plato_DiaMenu> Plato_DiaMenuNavigation { get; set; } = new List<Plato_DiaMenu>();
 }
