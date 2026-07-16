@@ -17,40 +17,49 @@ public class MenusController : Controller
     // GET: INGREDIENTESS
     public async Task<IActionResult> Index()
     {
-        var ingredientes = _context.Ingredientes
-    .Include(i => i.TipoIngredienteNavigation);
 
+        var menu = new MenuCompletoVM();
+        var menusConDatos = await _context.Menu
+            .Include(m => m.DiaMenuNavigation)
+            .ToListAsync();
 
-        return View(await ingredientes.ToListAsync());
+        menu.Menu = menusConDatos;
+
+        return View(menu);
     }
 
 
-    // GET: INGREDIENTESS/Create
-    public IActionResult Create()
-    {
-        ViewData["Id_TipoIngrediente"] = new SelectList(_context.TipoIngrediente, "Id_TipoIngrediente", "Nombre_TipoIngrediente");
-        return View();
-    }
+    //// GET: INGREDIENTESS/Create
+    //public IActionResult Create()
+    //{
+    //    ViewData["Id_TipoIngrediente"] = new SelectList(_context.TipoIngrediente, "Id_TipoIngrediente", "Nombre_TipoIngrediente");
+    //    return View();
+    //}
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(Ingredientes ingredientes)
+    public async Task<IActionResult> Create(MenuCompletoVM vm)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            _context.Add(ingredientes);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            vm.Menu = await _context.Menu
+                .Include(m => m.DiaMenuNavigation)
+                 .ToListAsync();
+
+            return View(vm);
         }
 
-        ViewData["Id_TipoIngrediente"] = new SelectList(
-            _context.TipoIngrediente,
-            "Id_TipoIngrediente",
-            "Nombre_TipoIngrediente",
-            ingredientes.Id_TipoIngrediente
-        );
+        var menu = new Menu { 
+            Cantidad_Dias=vm.Cantidad_Dias,
+            Cantidad_Comidas=vm.Cantidad_Comidas,
+            Cantidad_Cenas=vm.Cantidad_Cenas,
+            Fecha_Creacion=DateTime.Now
+        };
+        await _context.Menu.AddAsync(menu);
+        await _context.SaveChangesAsync();
+        
 
-        return View(ingredientes);
+        return RedirectToAction(nameof(Index));
     }
 
     // GET: INGREDIENTESS/Edit/5

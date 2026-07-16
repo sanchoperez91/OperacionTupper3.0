@@ -1,32 +1,164 @@
-@* @model IEnumerable<OperacionTupper3._0.Models.Menu>
+@model OperacionTupper3._0.Models.MenuCompletoVM
+<form asp-action="Create" method="post">
+    <div class="form-group mb-3">
+        <label asp-for="Cantidad_Dias" class="control-label">
+            Cantidad de días
+        </label>
 
-<h1 class="mb-4">Ingredientes</h1>
+        <select asp-for="Cantidad_Dias"
+                id="cantidadDias"
+                class="form-select">
+            <option value="">Selecciona los días</option>
 
-<div class="mb-4">
-    <a asp-action="Create" class="boton_anadir">+ Añadir</a>
-</div>
+            @for (int i = 1; i <= 15; i++)
+            {
+                <option value="@i">@i</option>
+            }
+        </select>
 
-<div class="contenedor-tipos">
-    @foreach (var grupo in Model.GroupBy(i => i.TipoIngredienteNavigation))
+        <span asp-validation-for="Cantidad_Dias"
+              class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Cantidad_Comidas" class="control-label">
+            Cantidad de comidas
+        </label>
+
+        <select asp-for="Cantidad_Comidas"
+                id="cantidadComidas"
+                class="form-select"
+                disabled>
+            <option value="">Selecciona primero los días</option>
+        </select>
+
+        <span asp-validation-for="Cantidad_Comidas"
+              class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Cantidad_Cenas" class="control-label">
+            Cantidad de cenas
+        </label>
+
+        <select asp-for="Cantidad_Cenas"
+                id="cantidadCenas"
+                class="form-select"
+                disabled>
+            <option value="">Selecciona primero los días</option>
+        </select>
+
+        <span asp-validation-for="Cantidad_Cenas"
+              class="text-danger"></span>
+    </div>
+    <div class="mt-3">
+        <button type="submit" class="btn btn-primary">
+            Crear menú
+        </button>
+    </div>
+
+</form>
+
+<h2 class="mt-5 mb-3">Menús creados</h2>
+
+<div class="menus-grid">
+    @foreach (var menu in Model.Menu)
     {
-        <div class="card-tipo">
-            <div class="card-titulo">
-                @grupo.Key.Nombre_TipoIngrediente
-            </div>
+        <div class="menu-card">
+            <h3>Menú @menu.Id_Menu</h3>
 
-            <div class="ingredientes-grid">
-                @foreach (var ingrediente in grupo.OrderBy(i => i.Nombre_Ingrediente))
-                {
-                    <div class="ingrediente-item">
-                        <span>@ingrediente.Nombre_Ingrediente</span>
+            <p>
+                <strong>Días:</strong>
+                @menu.Cantidad_Dias
+            </p>
 
-                        <div class="acciones">
-                            <a asp-action="Edit" asp-route-idingrediente="@ingrediente.Id_Ingrediente">✏️</a>
-                            <a asp-action="Delete" asp-route-idingrediente="@ingrediente.Id_Ingrediente">🗑️</a>
-                        </div>
-                    </div>
-                }
-            </div>
+            <p>
+                <strong>Comidas:</strong>
+                @menu.Cantidad_Comidas
+            </p>
+
+            <p>
+                <strong>Cenas:</strong>
+                @menu.Cantidad_Cenas
+            </p>
+
+            <p>
+                <strong>Fecha de creación:</strong>
+                @menu.Fecha_Creacion.ToString("dd/MM/yyyy")
+            </p>
+
+            <p>
+                <strong>Días creados:</strong>
+                @menu.DiaMenuNavigation.Count
+            </p>
+
+            @if (menu.DiaMenuNavigation.Count < menu.Cantidad_Dias)
+            {
+                <button asp-action="AñadirMenu" asp-controller="Menus" class="btn btn-primary">
+                    Añadir comidas
+                </button>
+            }
+
         </div>
     }
-</div> *@
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const selectDias = document.getElementById("cantidadDias");
+            const selectComidas = document.getElementById("cantidadComidas");
+            const selectCenas = document.getElementById("cantidadCenas");
+
+            selectDias.addEventListener("change", function () {
+                const cantidadDias = parseInt(this.value);
+
+                rellenarDesplegable(
+                    selectComidas,
+                    cantidadDias,
+                    "Selecciona las comidas"
+                );
+
+                rellenarDesplegable(
+                    selectCenas,
+                    cantidadDias,
+                    "Selecciona las cenas"
+                );
+            });
+
+            function rellenarDesplegable(select, cantidadMaxima, textoInicial) {
+                select.innerHTML = "";
+
+                if (isNaN(cantidadMaxima)) {
+                    select.disabled = true;
+
+                    const option = document.createElement("option");
+                    option.value = "";
+                    option.textContent = "Selecciona primero los días";
+
+                    select.appendChild(option);
+                    return;
+                }
+
+                select.disabled = false;
+
+                const optionInicial = document.createElement("option");
+                optionInicial.value = "";
+                optionInicial.textContent = textoInicial;
+                select.appendChild(optionInicial);
+
+                for (let i = 0; i <= cantidadMaxima; i++) {
+                    const option = document.createElement("option");
+                    option.value = i;
+                    option.textContent = i;
+
+                    select.appendChild(option);
+                }
+            }
+        });
+    </script>
+}
